@@ -1,0 +1,48 @@
+import torch
+from PIL import Image
+import cv2
+import sys
+import os
+
+# YOLOv5 Modell laden mit weights_only=False (da vertrauenswürdig)
+try:
+    ckpt = torch.load(r"C:\Users\danie\Downloads\best.pt", map_location='cpu', weights_only=False)
+    model = ckpt['model']  # Modell aus Checkpoint extrahieren
+    model.eval()
+    print("Modell erfolgreich geladen!")
+
+except Exception as e:
+    print(f"Fehler beim Laden: {e}")
+    sys.exit(1)
+
+# Bild analysieren - passe den Dateinamen an!
+image_path = r"C:\Users\danie\Downloads\Werk.jpg"  # Ersetze mit deinem echten Bildnamen
+
+# Bild laden und vorverarbeiten
+image = Image.open(image_path).convert('RGB')
+# Hier musst du die Bildvorverarbeitung an dein Modell anpassen
+# Für YOLOv5 typische Größe: 640x640
+from torchvision import transforms
+transform = transforms.Compose([
+    transforms.Resize((640, 640)),
+    transforms.ToTensor(),
+])
+
+input_tensor = transform(image).unsqueeze(0).half()  # Batch dimension hinzufügen und zu half precision konvertieren
+
+# Erkennung durchführen
+with torch.no_grad():
+    results = model(input_tensor)
+
+print("Erkennung abgeschlossen!")
+print(f"Ergebnis-Shape: {results.shape if hasattr(results, 'shape') else 'Unbekannt'}")
+
+# Ergebnisse anzeigen (abhängig von Modell-Ausgabe)
+if hasattr(results, 'shape') and len(results.shape) > 1:
+    print(f"Anzahl Erkennungen: {len(results[0])}")
+    for i, detection in enumerate(results[0]):
+        if len(detection) >= 6:  # x1, y1, x2, y2, conf, class
+            x1, y1, x2, y2, conf, cls = detection[:6]
+            print(f"Erkennung {i+1}: Klasse {int(cls)}, Konfidenz {conf:.2f}")
+else:
+    print("Ergebnisse:", results)

@@ -1,0 +1,25 @@
+{
+  "analysis_timestamp": "2026-05-07",
+  "image_analyzed": "C:\\Users\\danie\\Downloads\\Werk.jpg",
+  "total_expected_tools": 13,
+  "tools_found": 0,
+  "tools_missing": 13,
+  "detection_rate": 0.0,
+  "detected_tools": [],
+  "found_tools_list": [],
+  "missing_tools_list": [
+    "hammer",
+    "wrench",
+    "screwdriver",
+    "pliers",
+    "drill",
+    "saw",
+    "tape_measure",
+    "level",
+    "multimeter",
+    "soldering_iron",
+    "file",
+    "brush",
+    "sandpaper"
+  ]
+}
