@@ -1,48 +1,37 @@
-import torch
-from PIL import Image
-import cv2
-import sys
-import os
+﻿from ultralytics import YOLO
 
-# YOLOv5 Modell laden mit weights_only=False (da vertrauenswürdig)
-try:
-    ckpt = torch.load(r"C:\Users\danie\Downloads\best.pt", map_location='cpu', weights_only=False)
-    model = ckpt['model']  # Modell aus Checkpoint extrahieren
-    model.eval()
-    print("Modell erfolgreich geladen!")
 
-except Exception as e:
-    print(f"Fehler beim Laden: {e}")
-    sys.exit(1)
+def main() -> None:
+    model_path = r"C:\Users\danie\Downloads\best.pt"
+    image_path = r"C:\Users\danie\Downloads\IMG_6186.JPG"
 
-# Bild analysieren - passe den Dateinamen an!
-image_path = r"C:\Users\danie\Downloads\Werk.jpg"  # Ersetze mit deinem echten Bildnamen
+    print(f"Lade YOLO-Modell von {model_path}")
+    model = YOLO(model_path)
+    print(f"Modell geladen. Klassen: {model.names}")
 
-# Bild laden und vorverarbeiten
-image = Image.open(image_path).convert('RGB')
-# Hier musst du die Bildvorverarbeitung an dein Modell anpassen
-# Für YOLOv5 typische Größe: 640x640
-from torchvision import transforms
-transform = transforms.Compose([
-    transforms.Resize((640, 640)),
-    transforms.ToTensor(),
-])
+    print(f"Analysiere Bild: {image_path}")
+    results = model(image_path, imgsz=640, conf=0.1, verbose=False)
 
-input_tensor = transform(image).unsqueeze(0).half()  # Batch dimension hinzufügen und zu half precision konvertieren
+    if not results:
+        print("Keine Ergebnisse erhalten.")
+        return
 
-# Erkennung durchführen
-with torch.no_grad():
-    results = model(input_tensor)
+    result = results[0]
+    boxes = getattr(result, "boxes", None)
+    if boxes is None or len(boxes) == 0:
+        print("Keine erkannten Objekte.")
+        return
 
-print("Erkennung abgeschlossen!")
-print(f"Ergebnis-Shape: {results.shape if hasattr(results, 'shape') else 'Unbekannt'}")
+    xyxy = boxes.xyxy.cpu().numpy()
+    confs = boxes.conf.cpu().numpy()
+    classes = boxes.cls.cpu().numpy().astype(int)
 
-# Ergebnisse anzeigen (abhängig von Modell-Ausgabe)
-if hasattr(results, 'shape') and len(results.shape) > 1:
-    print(f"Anzahl Erkennungen: {len(results[0])}")
-    for i, detection in enumerate(results[0]):
-        if len(detection) >= 6:  # x1, y1, x2, y2, conf, class
-            x1, y1, x2, y2, conf, cls = detection[:6]
-            print(f"Erkennung {i+1}: Klasse {int(cls)}, Konfidenz {conf:.2f}")
-else:
-    print("Ergebnisse:", results)
+    print(f"Erkannte Objekte: {len(classes)}")
+    for idx, (bbox, cls_id, conf) in enumerate(zip(xyxy, classes, confs), start=1):
+        class_name = model.names.get(int(cls_id), f"class_{cls_id}")
+        x1, y1, x2, y2 = bbox.tolist()
+        print(f"{idx}: {class_name} (id={cls_id}, conf={conf:.3f}) bbox=[{x1:.1f}, {y1:.1f}, {x2:.1f}, {y2:.1f}]")
+
+
+if __name__ == "__main__":
+    main()

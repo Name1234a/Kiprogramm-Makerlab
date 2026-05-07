@@ -1,25 +1,88 @@
 {
-  "analysis_timestamp": "2026-05-07",
+  "analysis_timestamp": "2026-05-07T18:52:35.926203",
   "image_analyzed": "C:\\Users\\danie\\Downloads\\Werk.jpg",
   "total_expected_tools": 13,
-  "tools_found": 0,
-  "tools_missing": 13,
-  "detection_rate": 0.0,
-  "detected_tools": [],
-  "found_tools_list": [],
-  "missing_tools_list": [
+  "tools_found": 4,
+  "tools_missing": 9,
+  "detection_rate": 0.3076923076923077,
+  "detected_tools": [
+    {
+      "name": "Mehrzweckzange",
+      "class_id": 1,
+      "confidence": 0.9437856078147888,
+      "bbox": [
+        406.01885986328125,
+        213.3152313232422,
+        481.474609375,
+        436.6146545410156
+      ]
+    },
+    {
+      "name": "Hammer",
+      "class_id": 0,
+      "confidence": 0.9430003762245178,
+      "bbox": [
+        75.98445892333984,
+        173.0241241455078,
+        220.4074249267578,
+        485.16534423828125
+      ]
+    },
+    {
+      "name": "Rohrzange",
+      "class_id": 2,
+      "confidence": 0.7795131206512451,
+      "bbox": [
+        573.0645751953125,
+        179.18954467773438,
+        643.8245849609375,
+        453.27886962890625
+      ]
+    },
+    {
+      "name": "große Feile",
+      "class_id": 3,
+      "confidence": 0.6788259744644165,
+      "bbox": [
+        294.3100891113281,
+        165.9462127685547,
+        343.069580078125,
+        497.076416015625
+      ]
+    },
+    {
+      "name": "Rohrzange",
+      "class_id": 2,
+      "confidence": 0.10311578959226608,
+      "bbox": [
+        408.2085876464844,
+        213.06179809570312,
+        484.14276123046875,
+        438.6881103515625
+      ]
+    }
+  ],
+  "found_tools_list": [
     "hammer",
     "wrench",
-    "screwdriver",
     "pliers",
+    "file"
+  ],
+  "missing_tools_list": [
+    "screwdriver",
     "drill",
     "saw",
     "tape_measure",
     "level",
     "multimeter",
     "soldering_iron",
-    "file",
     "brush",
     "sandpaper"
-  ]
+  ],
+  "model_names": {
+    "0": "Hammer",
+    "1": "Mehrzweckzange",
+    "2": "Rohrzange",
+    "3": "große Feile"
+  }
 }
