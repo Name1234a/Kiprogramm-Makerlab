@@ -1,0 +1,46 @@
+{
+  "analysis_timestamp": "2026-05-19T14:56:44.484404",
+  "image_analyzed": "C:\\Users\\danie\\Desktop\\KI-Werkzeugwand-Makerlab\\Bilder\\Werk.jpg",
+  "total_expected_tools": 4,
+  "tools_found": 2,
+  "tools_missing": 2,
+  "detection_rate": 0.5,
+  "detected_tools": [
+    {
+      "name": "Mehrzweckzange",
+      "class_id": 1,
+      "confidence": 0.9687226414680481,
+      "bbox": [
+        2686.464599609375,
+        1413.76806640625,
+        3192.77001953125,
+        2855.849853515625
+      ]
+    },
+    {
+      "name": "Rohrzange",
+      "class_id": 2,
+      "confidence": 0.8739975094795227,
+      "bbox": [
+        3828.671875,
+        1214.370361328125,
+        4290.0048828125,
+        3003.2744140625
+      ]
+    }
+  ],
+  "found_tools_list": [
+    "rohrzange",
+    "mehrzweckzange"
+  ],
+  "missing_tools_list": [
+    "hammer",
+    "große feile"
+  ],
+  "model_names": {
+    "0": "Hammer",
+    "1": "Mehrzweckzange",
+    "2": "Rohrzange",
+    "3": "große Feile"
+  }
+}

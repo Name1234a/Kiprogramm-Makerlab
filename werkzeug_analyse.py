@@ -7,25 +7,17 @@ from ultralytics import YOLO
 
 
 EXPECTED_TOOLS = [
-    "hammer", "wrench", "screwdriver", "pliers", "drill",
-    "saw", "tape_measure", "level", "multimeter",
-    "soldering_iron", "file", "brush", "sandpaper"
+    "hammer",
+    "rohrzange",
+    "mehrzweckzange",
+    "große feile"
 ]
 
 TOOL_ALIASES = {
     "hammer": ["hammer"],
-    "wrench": ["wrench", "rohrzange", "pipe wrench", "pipe_wrench", "rohr zange"],
-    "pliers": ["pliers", "mehrzweckzange", "multizange", "zange"],
-    "file": ["file", "feile", "große feile", "grosse feile", "grossfeile"],
-    "screwdriver": ["screwdriver", "schraubenzieher"],
-    "drill": ["drill", "bohrer", "bohrmaschine"],
-    "saw": ["saw", "säge", "saege"],
-    "tape_measure": ["tape measure", "bandmaß", "bandmass", "maßband", "massband"],
-    "level": ["level", "wasserwaage"],
-    "multimeter": ["multimeter"],
-    "soldering_iron": ["soldering iron", "lötkolben", "loetkolben"],
-    "brush": ["brush", "bürste", "buerste"],
-    "sandpaper": ["sandpaper", "schleifpapier"]
+    "rohrzange": ["wrench", "pipe wrench", "pipe_wrench", "rohr zange"],
+    "mehrzweckzange": ["pliers", "multizange", "zange"],
+    "grosse feile": ["file", "feile", "große feile", "grosse feile", "grossfeile"]
 }
 
 
@@ -54,9 +46,9 @@ def is_expected_tool(tool_name: str) -> bool:
 
 
 def analyze_tool_recognition() -> dict | None:
-    model_path = Path(r"C:\Users\danie\Downloads\best.pt")
-    image_path = Path(r"C:\Users\danie\Downloads\Werk.jpg")
-    output_file = Path(r"C:\Users\danie\Downloads\werkzeug_analyse.json")
+    model_path = Path(r"C:\Users\danie\Desktop\KI-Werkzeugwand-Makerlab\Bilder\best.pt")
+    image_path = Path(r"C:\Users\danie\Desktop\KI-Werkzeugwand-Makerlab\Bilder\Werk.jpg")
+    output_file = Path(r"C:\Users\danie\Desktop\KI-Werkzeugwand-Makerlab\Bilder\werkzeug_analyse.json")
     confidence_threshold = 0.1
 
     try:
